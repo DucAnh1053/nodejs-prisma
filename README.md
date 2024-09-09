@@ -17,7 +17,7 @@
 
 1. Cấu hình kết nối cơ sở dữ liệu:
 
-    Tạo file `.env` chứa các biến phù hợp theo mẫu `example.env`
+    Tạo file `.env` chứa các biến phù hợp theo mẫu `.env.example`
 
 3. Triển khai Prisma Client và khởi tạo cơ sở dữ liệu:
 
