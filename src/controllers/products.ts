@@ -92,6 +92,8 @@ export const searchProducts = async (req: Request, res: Response) => {
                 search: req.query.q?.toString(),
             },
         },
+        skip: +(req.query.skip || 0),
+        take: 5,
     });
     res.json(products);
 };
