@@ -1,0 +1,41 @@
+.home-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .home-header {
+    background-color: #0044cc;
+    color: white;
+    padding: 10px;
+    text-align: center;
+  }
+  
+  .home-header nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .home-header nav ul li {
+    margin: 0 15px;
+  }
+  
+  .home-header nav ul li a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .home-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .home-footer {
+    background-color: #0044cc;
+    color: white;
+    text-align: center;
+    padding: 10px;
+  }
+  
