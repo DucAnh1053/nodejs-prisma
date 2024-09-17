@@ -25,6 +25,16 @@ export const signup = async (req:Request, res:Response, next: NextFunction) => {
             password: hashSync(password, 10)
         }
     });
+
+    await prismaClient.userInteraction.create({
+        data: {
+            userId: user.id,
+            type: 'SIGNUP',
+            metadata: {
+                device: req.headers['user-agent'] || 'Unknown'
+            }
+        }
+    })
     res.json(user);
 }
 
@@ -42,6 +52,16 @@ export const login = async (req:Request, res:Response) => {
     const token = jwt.sign({
         userId: user.id
     }, JWT_SECRET)
+
+    await prismaClient.userInteraction.create({
+        data: {
+            userId: user.id,
+            type: 'LOGIN',
+            metadata: {
+                device: req.headers['user-agent'] || 'Unknown'
+            }
+        }
+    })
 
     res.json({user, token});
 }

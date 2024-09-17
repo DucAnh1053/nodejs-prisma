@@ -19,6 +19,16 @@ enum Role {
   USER
 }
 
+enum UserInteractionType {
+  SIGNUP
+  LOGIN
+  LOGOUT
+  ADD_TO_CART
+  REMOVE_FROM_CART
+  PLACE_ORDER
+  CANCEL_ORDER
+}
+
 enum OrderEventStatus {
   PENDING
   ACCEPTED
@@ -41,8 +51,20 @@ model User {
   addresses Address[]
   cartItems CartItem[]
   orders Order[]
+  interactions UserInteraction[]
 
   @@map(name: "users")
+}
+
+model UserInteraction {
+  id Int @id @default(autoincrement())
+  userId Int
+  user User @relation(fields: [userId], references: [id])
+  type UserInteractionType
+  metadata Json?
+  createdAt DateTime @default(now())
+
+  @@map("user_interactions")
 }
 
 model Product {
