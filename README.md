@@ -1,9 +1,9 @@
 ## Cloning the Repository:
 
-    ```bash
-    git clone https://github.com/DucAnh1053/nodejs-prisma
-    cd nodejs-prisma
-    ```
+```bash
+git clone https://github.com/DucAnh1053/nodejs-prisma
+cd nodejs-prisma
+```
 
 ## Backend setup
 
