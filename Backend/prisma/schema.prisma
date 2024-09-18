@@ -15,12 +15,14 @@ datasource db {
 }
 
 enum Role {
+  LAB_TECHNICIAN
+  QUALITY_MANAGER
   ADMIN
-  USER
+  HOSPITAL_TECHNICIAN
 }
 
 enum UserInteractionType {
-  SIGNUP
+  ADD_USER
   LOGIN
   LOGOUT
   ADD_TO_CART
@@ -42,7 +44,7 @@ model User {
   name String
   email String @unique
   password String
-  role Role @default(USER)
+  role Role
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   defaultShippingAddress Int?
