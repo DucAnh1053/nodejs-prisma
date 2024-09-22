@@ -105,10 +105,12 @@ declare namespace Demo {
     interface User {
         id: number;
         name: string;
-        image: string;
+        email: string;
+        role: string;
         status: string;
-        messages: Message[];
         lastSeen: string;
+        messages: Message[];
+        [key: string]: string | number | boolean | Message[] | undefined;
     }
 
     interface Message {
@@ -216,23 +218,6 @@ declare namespace Demo {
         setIdx?: number;
         setId?: number;
         iconIdx?: number;
-    };
-    // UserService
-    type User = {
-        id: number;
-        name: string;
-        email: string;
-        role: string;
-        status: string;
-        lastSeen: string;
-        messages: Message[];
-        [key: string]: string | number | boolean | Message[] | undefined;
-    };
-
-    type Message = {
-        text: string;
-        ownerId: number;
-        createdAt: number;
     };
 
     type UserRole = 'ADMIN' | 'QUALITY_MANAGER' | 'LAB_TECHNITION' | 'HOSPITAL_TECHNICIAN';
