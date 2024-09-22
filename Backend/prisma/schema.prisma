@@ -49,6 +49,7 @@ model User {
   updatedAt DateTime @updatedAt
   defaultShippingAddress Int?
   defaultBillingAddress Int?
+  isDeleted Boolean @default(false)
 
   addresses Address[]
   cartItems CartItem[]

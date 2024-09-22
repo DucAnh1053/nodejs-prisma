@@ -111,6 +111,7 @@ export const getUserById = async (req: Request, res: Response) => {
         const user = await prismaClient.user.findFirstOrThrow({
             where: {
                 id: +req.params.id,
+                isDeleted: false,
             },
             include: {
                 addresses: true,
@@ -140,14 +141,17 @@ export const changeUserRole = async (req: Request, res: Response) => {
 };
 
 export const deleteUser = async (req: Request, res: Response) => {
-    try {
-        await prismaClient.user.delete({
-            where: {
-                id: +req.params.id,
-            },
-        });
-        res.json({ success: true });
-    } catch (error) {
-        throw new NotFoundException("User not found", ErrorCode.USER_NOT_FOUND);
-    }
+    // try {
+    await prismaClient.user.update({
+        where: {
+            id: +req.params.id,
+        },
+        data: {
+            isDeleted: true,
+        },
+    });
+    res.json({ success: true });
+    // } catch (error) {
+    //     throw new NotFoundException("User not found", ErrorCode.USER_NOT_FOUND);
+    // }
 };
