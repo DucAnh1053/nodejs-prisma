@@ -18,8 +18,8 @@ const Crud = () => {
         id: 0,
         name: '',
         email: '',
+        password: '',
         role: '',
-        status: 'ACTIVE',
         lastSeen: new Date().toISOString(),
         messages: []
     };
@@ -214,15 +214,6 @@ const Crud = () => {
         );
     };
 
-    const statusBodyTemplate = (rowData: Demo.User) => {
-        return (
-            <>
-                <span className="p-column-title">Status</span>
-                <span className={`user-badge status-${rowData.status?.toLowerCase()}`}>{rowData.status}</span>
-            </>
-        );
-    };
-
     const actionBodyTemplate = (rowData: Demo.User) => {
         return (
             <>
@@ -289,7 +280,6 @@ const Crud = () => {
                         <Column field="name" header="Name" sortable body={nameBodyTemplate} headerStyle={{ minWidth: '15rem' }}></Column>
                         <Column field="email" header="Email" sortable body={emailBodyTemplate} headerStyle={{ minWidth: '20rem' }}></Column>
                         <Column field="role" header="Role" sortable body={roleBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
-                        <Column field="status" header="Status" body={statusBodyTemplate} sortable headerStyle={{ minWidth: '10rem' }}></Column>
                         <Column body={actionBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
                     </DataTable>
 
@@ -315,6 +305,20 @@ const Crud = () => {
                         <div className="field">
                             <label htmlFor="role">Role</label>
                             <InputText id="role" value={user.role} onChange={(e) => onInputChange(e, 'role')} required />
+                        </div>
+                        <div className="field">
+                            <label htmlFor="password">Password</label>
+                            <InputText
+                                id="password"
+                                type="password"
+                                value={user.password}
+                                onChange={(e) => onInputChange(e, 'password')}
+                                required
+                                className={classNames({
+                                    'p-invalid': submitted && !user.password
+                                })}
+                            />
+                            {submitted && !user.password && <small className="p-invalid">Password is required.</small>}
                         </div>
                     </Dialog>
 

@@ -32,9 +32,9 @@ class UserService {
         }
     }
 
-    async createUser(user: Demo.User): Promise<Demo.User> {
+    async createUser(user: { name: string; email: string; password: string; role: string }): Promise<Demo.User> {
         try {
-            const response = await axios.post<Demo.User>(this.baseUrl, { ...user, defaultShippingAddress: 0 }, {
+            const response = await axios.post<Demo.User>('http://localhost:8080/auth/signup', user, {
                 headers: this.getAuthHeaders()
             });
             return response.data;

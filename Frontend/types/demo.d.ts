@@ -105,9 +105,9 @@ declare namespace Demo {
     interface User {
         id: number;
         name: string;
+        password: string;
         email: string;
         role: string;
-        status: string;
         lastSeen: string;
         messages: Message[];
         [key: string]: string | number | boolean | Message[] | undefined;
