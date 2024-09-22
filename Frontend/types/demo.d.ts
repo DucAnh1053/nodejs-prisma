@@ -217,4 +217,40 @@ declare namespace Demo {
         setId?: number;
         iconIdx?: number;
     };
+    // UserService
+    type User = {
+        id: number;
+        name: string;
+        email: string;
+        role: string;
+        status: string;
+        lastSeen: string;
+        messages: Message[];
+        [key: string]: string | number | boolean | Message[] | undefined;
+    };
+
+    type Message = {
+        text: string;
+        ownerId: number;
+        createdAt: number;
+    };
+
+    type UserRole = 'ADMIN' | 'QUALITY_MANAGER' | 'LAB_TECHNITION' | 'HOSPITAL_TECHNICIAN';
+
+    type UserStatus = 'active' | 'inactive' | 'banned';
+
+    type UserProfile = {
+        userId: number;
+        bio: string;
+        website: string;
+        location: string;
+        [key: string]: string | number | undefined;
+    };
+
+    type UserActivity = {
+        userId: number;
+        action: string;
+        timestamp: number;
+        [key: string]: string | number | undefined;
+    };
 }
