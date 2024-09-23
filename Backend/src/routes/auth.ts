@@ -6,7 +6,7 @@ import adminMiddleware from '../middlewares/admin';
 
 const authRoutes:Router = Router();
 
-authRoutes.post('/signup', [], errorHandler(signup));
+authRoutes.post('/signup', [authMiddleware,adminMiddleware], errorHandler(signup));
 authRoutes.post('/login', errorHandler(login));
 authRoutes.get('/me', [authMiddleware], errorHandler(me));
 
