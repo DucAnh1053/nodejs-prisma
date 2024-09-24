@@ -9,7 +9,7 @@ const usersRouter:Router = Router();
 usersRouter.post('/address', [authMiddleware], errorHandler(addAddress));
 usersRouter.delete('/address/:id', [authMiddleware], errorHandler(deleteAddress));
 usersRouter.get('/address', [authMiddleware], errorHandler(listAddress));
-usersRouter.put('/', [authMiddleware], errorHandler(updateUser));
+usersRouter.put('/:id', [authMiddleware], errorHandler(updateUser));
 usersRouter.put('/:id/role', [authMiddleware, adminMiddleware], errorHandler(changeUserRole));
 usersRouter.get('/', [authMiddleware, adminMiddleware], errorHandler(listUsers));
 usersRouter.get('/:id', [authMiddleware, adminMiddleware], errorHandler(getUserById));

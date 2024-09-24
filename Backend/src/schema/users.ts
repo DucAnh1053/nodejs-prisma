@@ -22,6 +22,13 @@ export const AddressSchema = z.object({
 
 export const UpdateUserSchema = z.object({
     name: z.string().optional(),
+    email: z.string().email().optional(),
+    role: z.enum([
+        "ADMIN",
+        "LAB_TECHNICIAN",
+        "QUALITY_MANAGER",
+        "HOSPITAL_TECHNICIAN",
+    ]),
     defaultShippingAddress: z.number().optional(),
     defaultBillingAddress: z.number().optional(),
 });
