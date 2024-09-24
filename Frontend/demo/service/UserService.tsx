@@ -56,17 +56,6 @@ class UserService {
         }
     }
 
-    async updateUserRole(userId: string, newRole: string): Promise<Demo.User> {
-        try {
-            const response = await axios.put<Demo.User>(`${this.baseUrl}/${userId}/role`, { role: newRole }, {
-                headers: this.getAuthHeaders()
-            });
-            return response.data;
-        } catch (error) {
-            console.error('Error updating user role:', error);
-            throw error;
-        }
-    }
     async deleteUser(userId: number): Promise<void> {
         try {
             await axios.delete(`${this.baseUrl}/${userId}`, {

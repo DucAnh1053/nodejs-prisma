@@ -43,7 +43,6 @@ const LoginPage = () => {
         } catch (error) {
             console.error('Login error:', error);
             router.push("/auth/error");
-            router.push("/auth/error");
         }
     };
 
