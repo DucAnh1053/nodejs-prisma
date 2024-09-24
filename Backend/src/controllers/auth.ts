@@ -33,10 +33,7 @@ export const signup = async (req:Request, res:Response, next: NextFunction) => {
 export const login = async (req:Request, res:Response) => {
     const {email, password} = req.body;
 
-    let user = await prismaClient.user.findFirst({where: {
-        email,
-        isDeleted: false,
-    }});
+    let user = await prismaClient.user.findFirst({where: {email}});
     if (!user) {
         throw new NotFoundException("User not found", ErrorCode.USER_NOT_FOUND);
     }

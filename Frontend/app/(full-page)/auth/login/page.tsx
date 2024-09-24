@@ -38,9 +38,11 @@ const LoginPage = () => {
             } else {
                 console.error('Login failed');
                 alert('Invalid email or password.');
+                router.push("/auth/error");
             }
         } catch (error) {
             console.error('Login error:', error);
+            router.push("/auth/error");
         }
     };
 

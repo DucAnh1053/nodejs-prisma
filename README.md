@@ -74,4 +74,8 @@ cd nodejs-prisma
 
     ```bash
     npm run dev
+<<<<<<< HEAD
     ```
+=======
+    ```
+>>>>>>> 099995d09eb579219e05b21abb91fa7a100ae7ac
