@@ -11,6 +11,8 @@ import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
 import { UserService } from '../../../../demo/service/UserService';
 import { Demo } from '@/types';
+import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
+import axios from 'axios';
 
 /* @todo Used 'as any' for types here. Will fix in next version due to onSelectionChange event type issue. */
 const Crud = () => {
@@ -23,6 +25,7 @@ const Crud = () => {
         lastSeen: new Date().toISOString(),
         messages: []
     };
+    
 
     const [users, setUsers] = useState<Demo.User[] | null>(null);
     const [userDialog, setUserDialog] = useState(false);
@@ -34,6 +37,13 @@ const Crud = () => {
     const [globalFilter, setGlobalFilter] = useState('');
     const toast = useRef<Toast>(null);
     const dt = useRef<DataTable<any>>(null);
+    
+    const roleOptions = [
+        { label: 'Admin', value: 'ADMIN' },
+        { label: 'LAB_TECHNICIAN', value: 'LAB_TECHNICIAN' },
+        { label: 'QUALITY_MANAGER', value: 'QUALITY_MANAGER' },
+        { label: 'HOSPITAL_TECHNICIAN', value: 'HOSPITAL_TECHNICIAN' }
+    ];
 
     useEffect(() => {
         const userService = new UserService();
@@ -160,11 +170,11 @@ const Crud = () => {
         });
     };
 
-    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, name: string) => {
-        const val = (e.target && e.target.value) || '';
+    const onInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | DropdownChangeEvent, name: string) => {
+        const val = (e.target && e.target.value) || (e as DropdownChangeEvent).value || '';
         let _user = { ...user };
         _user[`${name}`] = val;
-
+    
         setUser(_user);
     };
 
@@ -251,6 +261,35 @@ const Crud = () => {
             <Button label="Yes" icon="pi pi-check" text onClick={deleteSelectedUsers} />
         </>
     );
+    const updateUserRole = async (userId: string, newRole: string) => {
+        try {
+            const token = localStorage.getItem('token'); // Retrieve the token from localStorage
+            if (!token) {
+                throw new Error('No token found');
+            }
+    
+            const response = await axios.put(
+                `http://localhost:8080/users/${userId}/role`,
+                { role: newRole }, // Send the role in the body
+                {
+                    headers: {
+                        Authorization: `${token}` // Add the token to the request headers
+                    }
+                }
+            );
+            console.log('User role updated successfully:', response.data);
+        } catch (error) {
+            console.error('Error updating user role:', error);
+        }
+    };
+    
+    const handleRoleChange = (e: DropdownChangeEvent) => {
+        const newRole = e.value;
+        const userId = user.id; 
+        updateUserRole(userId.toString(), newRole);
+        onInputChange(e, 'role'); // Update the local state as well
+    };
+    
 
     return (
         <div className="grid crud-demo">
@@ -282,7 +321,6 @@ const Crud = () => {
                         <Column field="role" header="Role" sortable body={roleBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
                         <Column body={actionBodyTemplate} headerStyle={{ minWidth: '10rem' }}></Column>
                     </DataTable>
-
                     <Dialog visible={userDialog} style={{ width: '450px' }} header="User Details" modal className="p-fluid" footer={userDialogFooter} onHide={hideDialog}>
                         <div className="field">
                             <label htmlFor="name">Name</label>
@@ -304,7 +342,13 @@ const Crud = () => {
                         </div>
                         <div className="field">
                             <label htmlFor="role">Role</label>
-                            <InputText id="role" value={user.role} onChange={(e) => onInputChange(e, 'role')} required />
+                            <Dropdown
+                                id="role"
+                                value={user.role}
+                                options={roleOptions}
+                                onChange={handleRoleChange}
+                                required
+                            />
                         </div>
                         <div className="field">
                             <label htmlFor="password">Password</label>
@@ -321,7 +365,6 @@ const Crud = () => {
                             {submitted && !user.password && <small className="p-invalid">Password is required.</small>}
                         </div>
                     </Dialog>
-
                     <Dialog visible={deleteUserDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteUserDialogFooter} onHide={hideDeleteUserDialog}>
                         <div className="flex align-items-center justify-content-center">
                             <i className="pi pi-exclamation-triangle mr-3" style={{ fontSize: '2rem' }} />
