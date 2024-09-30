@@ -60,7 +60,7 @@ export const updateUser = async (req: Request, res: Response) => {
                 ErrorCode.ADDRESS_NOT_FOUND
             );
         }
-        if (shippingAddress.userId !== +req.params.id) {
+        if (shippingAddress.userId !== req.user.id) {
             throw new BadRequestsException(
                 "Address does not belong to user",
                 ErrorCode.ADDRESS_DOES_NOT_BELONG
@@ -80,7 +80,7 @@ export const updateUser = async (req: Request, res: Response) => {
                 ErrorCode.ADDRESS_NOT_FOUND
             );
         }
-        if (billingAddress.userId !== +req.params.id) {
+        if (billingAddress.userId !== req.user.id) {
             throw new BadRequestsException(
                 "Address does not belong to user",
                 ErrorCode.ADDRESS_DOES_NOT_BELONG
@@ -90,7 +90,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
     const updateUser = await prismaClient.user.update({
         where: {
-            id: +req.params.id,
+            id: req.user.id,
         },
         data: validateData,
     });
