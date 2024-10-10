@@ -9,7 +9,7 @@ import { Toast } from 'primereact/toast';
 import { Toolbar } from 'primereact/toolbar';
 import { classNames } from 'primereact/utils';
 import React, { useEffect, useRef, useState } from 'react';
-import { UserService } from '../../../../demo/service/UserService';
+import { UserService } from '../../../../modules/demo/service/UserService';
 import { Demo } from '@/types';
 import { Dropdown, DropdownChangeEvent } from 'primereact/dropdown';
 import axios from 'axios';
